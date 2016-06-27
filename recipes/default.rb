@@ -12,15 +12,18 @@ secret = Chef::EncryptedDataBagItem.load_secret(Chef::Config[:encrypted_data_bag
 artifactory_creds = Chef::EncryptedDataBagItem.load("secrets","artifactory", secret)
 
 art_passwd = artifactory_creds["password"]
-Chef::Log.info("*************************************************************The secret is ***********************************: '#{art_passwd}'")
+#Chef::Log.info("*************************************************************The secret is ***********************************: '#{art_passwd}'")
 
 
 
-artifactory_artifact "/tmp/testfile.jar" do
+artifactory_artifact "/var/lib/tomcat8/webapps/CounterWebApp.war" do
   artifactoryonline "crevise"
   repository "ext-snapshot-local"
-  repository_path "/com/javacodegeeks/SampleApplication/1.0-SNAPSHOT/SampleApplication-1.0-20160620.085711-1.jar"
+  repository_path "/com/mkyong/CounterWebApp/1.0-SNAPSHOT/CounterWebApp-1.0-20160621.131126-2.war"
   artifactory_username "admin"
-  #artifactory_password "password"
   artifactory_password art_passwd
+end
+
+service "tomcat8" do
+  action :restart
 end
