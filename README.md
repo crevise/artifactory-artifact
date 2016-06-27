@@ -1,5 +1,4 @@
 # artifactory-artifact
-<<<<<<< HEAD
 
 LWRP for artifacts on Artifactory.
 
